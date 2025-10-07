@@ -1,0 +1,40 @@
+# The name of your automated job
+name: Daily AI Lesson
+
+on:
+  # This allows you to run the job manually from the Actions tab for testing
+  workflow_dispatch:
+
+  # This is the schedule trigger
+  schedule:
+    # Runs at 03:30 UTC every day, which is 9:00 AM in India (IST)
+    - cron: '30 3 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Use a standard virtual machine
+
+    steps:
+      # Step 1: Check out your repository code
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      # Step 3: Install the necessary libraries
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # Step 4: Run your agent script
+      - name: Run AI Tutor Agent
+        env:
+          # This securely loads your secrets as environment variables for the script
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          FIREBASE_CREDS_JSON: ${{ secrets.FIREBASE_CREDS_JSON }}
+        run: python agent.py

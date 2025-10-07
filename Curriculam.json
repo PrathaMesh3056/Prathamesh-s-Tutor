@@ -1,0 +1,602 @@
+[
+  {
+    "day": 1,
+    "topic": "What is AI vs. ML vs. Deep Learning? Setting up Your Environment (Python, Jupyter Notebook).",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending "
+  },
+  {
+    "day": 2,
+    "topic": "'Hello, World!', Variables, and Basic Data Types (Integers, Floats, Strings).",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 3,
+    "topic": "Basic Operators (Arithmetic, Comparison, Logical).",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 4,
+    "topic": "Introduction to Python Lists.",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 5,
+    "topic": "Python Tuples and Dictionaries.",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 6,
+    "topic": "Python Sets.",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 7,
+    "topic": "`if`, `elif`, `else` Statements (Conditional Logic).",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 8,
+    "topic": "`for` Loops.",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 9,
+    "topic": "`while` Loops.",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 10,
+    "topic": "Project 1: Simple Calculator App.",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 11,
+    "topic": "Introduction to Functions.",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 12,
+    "topic": "Function Arguments and Return Values.",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 13,
+    "topic": "Variable Scope (Local vs. Global).",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 14,
+    "topic": "Lambda Functions.",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 15,
+    "topic": "Reading from and Writing to Files.",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 16,
+    "topic": "Introduction to Object-Oriented Programming (OOP): Classes and Objects.",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 17,
+    "topic": "OOP: Methods and Attributes.",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 18,
+    "topic": "OOP: Inheritance.",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 19,
+    "topic": "Error Handling (`try`, `except`).",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 20,
+    "topic": "Project 2: To-Do List Application.",
+    "phase": "Python & Programming Fundamentals",
+    "status": "pending"
+  },
+  {
+    "day": 21,
+    "topic": "Introduction to NumPy: Creating Arrays.",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 22,
+    "topic": "NumPy: Array Indexing and Slicing.",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 23,
+    "topic": "NumPy: Mathematical Operations on Arrays.",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 24,
+    "topic": "Introduction to Pandas: Series and DataFrames.",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 25,
+    "topic": "Pandas: Loading Data (from CSV, Excel).",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 26,
+    "topic": "Pandas: Exploring a DataFrame (`.head()`, `.info()`, `.describe()`).",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 27,
+    "topic": "Pandas: Selecting Data (Rows and Columns).",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 28,
+    "topic": "Pandas: Filtering Data.",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 29,
+    "topic": "Pandas: Handling Missing Values.",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 30,
+    "topic": "Project 3: Analyzing a Simple Dataset with Pandas.",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 31,
+    "topic": "Pandas: Grouping Data with `.groupby()`.",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 32,
+    "topic": "Pandas: Merging, Joining, and Concatenating DataFrames.",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 33,
+    "topic": "Introduction to Data Visualization with Matplotlib.",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 34,
+    "topic": "Matplotlib: Creating Line Plots and Scatter Plots.",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 35,
+    "topic": "Matplotlib: Creating Bar Charts and Histograms.",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 36,
+    "topic": "Introduction to Seaborn for Statistical Plots.",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 37,
+    "topic": "Seaborn: Heatmaps and Pair Plots.",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 38,
+    "topic": "Customizing Plots (Titles, Labels, Colors).",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 39,
+    "topic": "Saving Plots to Files.",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 40,
+    "topic": "Project 4: Creating a Data Visualization Dashboard for a Dataset.",
+    "phase": "Data Science Libraries",
+    "status": "pending"
+  },
+  {
+    "day": 41,
+    "topic": "Mean, Median, and Mode.",
+    "phase": "Math & Statistics Foundations",
+    "status": "pending"
+  },
+  {
+    "day": 42,
+    "topic": "Variance and Standard Deviation.",
+    "phase": "Math & Statistics Foundations",
+    "status": "pending"
+  },
+  {
+    "day": 43,
+    "topic": "Introduction to Probability.",
+    "phase": "Math & Statistics Foundations",
+    "status": "pending"
+  },
+  {
+    "day": 44,
+    "topic": "Conditional Probability.",
+    "phase": "Math & Statistics Foundations",
+    "status": "pending"
+  },
+  {
+    "day": 45,
+    "topic": "Normal Distribution.",
+    "phase": "Math & Statistics Foundations",
+    "status": "pending"
+  },
+  {
+    "day": 46,
+    "topic": "Correlation vs. Causation.",
+    "phase": "Math & Statistics Foundations",
+    "status": "pending"
+  },
+  {
+    "day": 47,
+    "topic": "Introduction to Linear Algebra: Vectors and Matrices.",
+    "phase": "Math & Statistics Foundations",
+    "status": "pending"
+  },
+  {
+    "day": 48,
+    "topic": "Linear Algebra: Dot Product.",
+    "phase": "Math & Statistics Foundations",
+    "status": "pending"
+  },
+  {
+    "day": 49,
+    "topic": "What is a Derivative? (Calculus Intuition).",
+    "phase": "Math & Statistics Foundations",
+    "status": "pending"
+  },
+  {
+    "day": 50,
+    "topic": "What is Gradient Descent? (Intuition).",
+    "phase": "Math & Statistics Foundations",
+    "status": "pending"
+  },
+  {
+    "day": 51,
+    "topic": "Data Preprocessing: Scaling and Normalization.",
+    "phase": "Math & Statistics Foundations",
+    "status": "pending"
+  },
+  {
+    "day": 52,
+    "topic": "Data Preprocessing: Encoding Categorical Variables.",
+    "phase": "Math & Statistics Foundations",
+    "status": "pending"
+  },
+  {
+    "day": 53,
+    "topic": "The Train-Test Split.",
+    "phase": "Math & Statistics Foundations",
+    "status": "pending"
+  },
+  {
+    "day": 54,
+    "topic": "What is Overfitting and Underfitting?",
+    "phase": "Math & Statistics Foundations",
+    "status": "pending"
+  },
+  {
+    "day": 55,
+    "topic": "Introduction to Scikit-Learn: The `.fit()` and `.predict()` Paradigm.",
+    "phase": "Math & Statistics Foundations",
+    "status": "pending"
+  },
+  {
+    "day": 56,
+    "topic": "Introduction to Supervised Learning: Regression vs. Classification.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 57,
+    "topic": "Linear Regression: Theory and Intuition.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 58,
+    "topic": "Implementing Linear Regression with Scikit-Learn.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 59,
+    "topic": "Evaluating Regression Models (MSE, R\u00c2\u00b2).",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 60,
+    "topic": "Project 5: Predicting House Prices.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 61,
+    "topic": "Logistic Regression: Theory for Classification.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 62,
+    "topic": "Implementing Logistic Regression with Scikit-Learn.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 63,
+    "topic": "Evaluating Classification Models: Accuracy and Confusion Matrix.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 64,
+    "topic": "Precision, Recall, and F1-Score.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 65,
+    "topic": "Project 6: Classifying Spam Emails.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 66,
+    "topic": "K-Nearest Neighbors (KNN): Theory and Implementation.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 67,
+    "topic": "Support Vector Machines (SVMs): Theory and Implementation.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 68,
+    "topic": "Decision Trees: Theory.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 69,
+    "topic": "Decision Trees: Implementation.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 70,
+    "topic": "Project 7: Predicting Customer Churn.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 71,
+    "topic": "Random Forests: The Power of Ensembles.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 72,
+    "topic": "Implementing Random Forests.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 73,
+    "topic": "Hyperparameter Tuning.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 74,
+    "topic": "Introduction to Unsupervised Learning.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 75,
+    "topic": "K-Means Clustering: Theory.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 76,
+    "topic": "K-Means Clustering: Implementation.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 77,
+    "topic": "Evaluating Clustering Models.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 78,
+    "topic": "Project 8: Segmenting Customers with K-Means.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 79,
+    "topic": "Principal Component Analysis (PCA) for Dimensionality Reduction.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 80,
+    "topic": "Review of All ML Models.",
+    "phase": "Core Machine Learning Algorithms",
+    "status": "pending"
+  },
+  {
+    "day": 81,
+    "topic": "What is a Neural Network? The Perceptron.",
+    "phase": "Deep Learning",
+    "status": "pending"
+  },
+  {
+    "day": 82,
+    "topic": "Activation Functions (Sigmoid, ReLU).",
+    "phase": "Deep Learning",
+    "status": "pending"
+  },
+  {
+    "day": 83,
+    "topic": "Building a Multi-Layer Perceptron (MLP).",
+    "phase": "Deep Learning",
+    "status": "pending"
+  },
+  {
+    "day": 84,
+    "topic": "Backpropagation (High-Level Intuition).",
+    "phase": "Deep Learning",
+    "status": "pending"
+  },
+  {
+    "day": 85,
+    "topic": "Introduction to TensorFlow and Keras.",
+    "phase": "Deep Learning",
+    "status": "pending"
+  },
+  {
+    "day": 86,
+    "topic": "Building a Simple Neural Network with Keras for Classification.",
+    "phase": "Deep Learning",
+    "status": "pending"
+  },
+  {
+    "day": 87,
+    "topic": "Project 9: Classifying MNIST Digits.",
+    "phase": "Deep Learning",
+    "status": "pending"
+  },
+  {
+    "day": 88,
+    "topic": "Convolutional Neural Networks (CNNs): Intuition for Image Data.",
+    "phase": "Deep Learning",
+    "status": "pending"
+  },
+  {
+    "day": 89,
+    "topic": "CNNs: Convolution and Pooling Layers.",
+    "phase": "Deep Learning",
+    "status": "pending"
+  },
+  {
+    "day": 90,
+    "topic": "Building a CNN with Keras.",
+    "phase": "Deep Learning",
+    "status": "pending"
+  },
+  {
+    "day": 91,
+    "topic": "Project 10: Image Classification (e.g., Cats vs. Dogs).",
+    "phase": "Deep Learning",
+    "status": "pending"
+  },
+  {
+    "day": 92,
+    "topic": "Recurrent Neural Networks (RNNs): Intuition for Sequence Data.",
+    "phase": "Deep Learning",
+    "status": "pending"
+  },
+  {
+    "day": 93,
+    "topic": "The Vanishing Gradient Problem and LSTMs.",
+    "phase": "Deep Learning",
+    "status": "pending"
+  },
+  {
+    "day": 94,
+    "topic": "Building an LSTM with Keras.",
+    "phase": "Deep Learning",
+    "status": "pending"
+  },
+  {
+    "day": 95,
+    "topic": "Project 11: Simple Text Generation or Sentiment Analysis.",
+    "phase": "Deep Learning",
+    "status": "pending"
+  },
+  {
+    "day": 96,
+    "topic": "Introduction to Natural Language Processing (NLP): Bag-of-Words, TF-IDF.",
+    "phase": "Advanced Topics & Next Steps",
+    "status": "pending"
+  },
+  {
+    "day": 97,
+    "topic": "Introduction to Transformers and the Attention Mechanism (High-Level).",
+    "phase": "Advanced Topics & Next Steps",
+    "status": "pending"
+  },
+  {
+    "day": 98,
+    "topic": "What is Transfer Learning? Using Pre-trained Models.",
+    "phase": "Advanced Topics & Next Steps",
+    "status": "pending"
+  },
+  {
+    "day": 99,
+    "topic": "Introduction to MLOps: What Happens After a Model is Built?",
+    "phase": "Advanced Topics & Next Steps",
+    "status": "pending"
+  },
+  {
+    "day": 100,
+    "topic": "Final Project: Choose a dataset and apply the best model you can. Review your journey and plan what to learn next!",
+    "phase": "Advanced Topics & Next Steps",
+    "status": "pending"
+  }
+]
