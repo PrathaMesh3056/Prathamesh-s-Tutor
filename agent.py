@@ -13,76 +13,105 @@ from firebase_admin import credentials, firestore
 import google.generativeai as genai
 
 # --- 1. SETUP: LOAD SECRETS and CONFIGURE APIS ---
+print("--- SCRIPT START ---")
 load_dotenv()
 
-# Load Google Gemini API Key and configure the client
+# Load and configure Google Gemini API
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel('gemini-2.5-pro') # Using the stable gemini-pro model
+if GEMINI_API_KEY:
+    print("OK: Gemini API Key loaded.")
+    genai.configure(api_key=GEMINI_API_KEY)
+    model = genai.GenerativeModel('gemini-pro')
+else:
+    print("FATAL ERROR: Gemini API Key not found in secrets!")
+    exit()
 
-# Load Telegram secrets and clean them to prevent errors in automation
+# Load and clean Telegram secrets
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "").strip().strip('"')
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "").strip().strip('"')
+if not (TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID):
+    print("FATAL ERROR: Telegram secrets not found or empty!")
+    exit()
+else:
+    print("OK: Telegram secrets loaded.")
 
-# Load Firebase credentials from a JSON string in environment variables for GitHub Actions
-FIREBASE_CREDS_JSON = os.getenv("FIREBASE_CREDS_JSON")
+# Load and initialize Firebase
+db = None
 try:
-    if FIREBASE_CREDS_JSON:
-        creds_dict = json.loads(FIREBASE_CREDS_JSON)
-        cred = credentials.Certificate(creds_dict)
-    else:
-        # Fallback for local development using the credentials file
-        cred = credentials.Certificate("firebase-credentials.json")
-
-    # Initialize Firebase App (only if it hasn't been initialized yet)
+    FIREBASE_CREDS_JSON = os.getenv("FIREBASE_CREDS_JSON")
+    if not FIREBASE_CREDS_JSON:
+        raise ValueError("FIREBASE_CREDS_JSON secret not found!")
+    
+    creds_dict = json.loads(FIREBASE_CREDS_JSON)
+    cred = credentials.Certificate(creds_dict)
+    
     if not firebase_admin._apps:
         firebase_admin.initialize_app(cred)
+    
+    db = firestore.client()
+    print("OK: Firebase initialized and Firestore client created successfully.")
 except Exception as e:
-    print(f"Error initializing Firebase: {e}")
-    exit() # Exit if Firebase can't be configured
+    print(f"FATAL ERROR initializing Firebase: {e}")
+    exit()
 
-db = firestore.client()
 LESSONS_COLLECTION = 'lessons'
 
-# --- 2. EDITED CODE: DATABASE FUNCTIONS ---
+# --- 2. DATABASE FUNCTIONS (CORRECTED) ---
 
 def find_next_lesson_from_db():
     """Finds the first lesson with status 'pending' from Firestore, ordered by day."""
-    print("Querying Firestore for the next pending lesson...")
+    print("-> Querying Firestore for the next pending lesson...")
     try:
         lessons_ref = db.collection(LESSONS_COLLECTION)
-        # Query for pending lessons, order by the 'day' field, and get the first one
         query = lessons_ref.where('status', '==', 'pending').order_by('day').limit(1)
         results = query.stream()
-
         for lesson_doc in results:
+            print(f"  > Found pending lesson: Day {lesson_doc.to_dict().get('day')}")
             return lesson_doc.to_dict()
-        return None # Return None if no pending lessons are found
+        print("  > No pending lessons found.")
+        return None
     except Exception as e:
-        print(f"An error occurred while querying Firestore: {e}")
+        print(f"  > ERROR during Firestore query: {e}")
         return None
 
-# New, more robust function
+@firestore.transactional
+def update_lesson_in_transaction(transaction, doc_ref, data_to_update):
+    """A helper function for transactional updates."""
+    transaction.set(doc_ref, data_to_update)
+
 def update_lesson_status_in_db(lesson_data):
-    """Overwrites the lesson document in Firestore with an updated status."""
+    """Overwrites the lesson document in Firestore with an updated status using a transaction."""
     day = lesson_data.get('day')
-    print(f"Updating status for Day {day} in Firestore...")
+    doc_id = str(day)
+    print(f"-> Attempting transactional update for Day {day} (Document ID: {doc_id})...")
     try:
-        # Create a copy of the lesson data and change the status
         updated_lesson = lesson_data.copy()
         updated_lesson['status'] = 'complete'
-
-        # Use .set() to completely overwrite the document. This is more reliable.
-        lesson_ref = db.collection(LESSONS_COLLECTION).document(str(day))
-        lesson_ref.set(updated_lesson)
-        print(f"  > Successfully updated Day {day} to 'complete'.")
+        
+        doc_ref = db.collection(LESSONS_COLLECTION).document(doc_id)
+        
+        transaction = db.transaction()
+        update_lesson_in_transaction(transaction, doc_ref, updated_lesson)
+        
+        print(f"  > Firestore transaction committed for Day {day}.")
+        
+        # --- VERIFICATION STEP ---
+        print(f"  > Verifying update for Day {day}...")
+        updated_doc = doc_ref.get()
+        if updated_doc.exists and updated_doc.to_dict().get('status') == 'complete':
+            print(f"  > VERIFICATION SUCCESS: Day {day} is now 'complete' in Firestore.")
+            return True
+        else:
+            print(f"  > VERIFICATION FAILED: Status is still 'pending' after write operation.")
+            return False
+            
     except Exception as e:
-        print(f"  > Failed to update status for Day {day}: {e}")
+        print(f"  > CRITICAL ERROR during Firestore transaction: {e}")
+        return False
 
-# --- 3. UNEDITED CODE: CORE LOGIC FUNCTIONS ---
-
+# --- 3. CORE LOGIC FUNCTIONS ---
 def generate_lesson_content(topic):
-    """(Unchanged) Generates the educational content and a Mermaid diagram for a given topic."""
+    """Generates the educational content and a Mermaid diagram for a given topic."""
     print(f"Generating lesson for topic: {topic}...")
     prompt = f"""
     You are an expert AI and Machine Learning tutor named 'Synapse'.
@@ -113,7 +142,7 @@ def generate_lesson_content(topic):
         return None
 
 def generate_diagram_image(content):
-    """(Unchanged) Finds Mermaid code, generates an image from it, and returns the path."""
+    """Finds Mermaid code, generates an image from it, and returns the path."""
     mermaid_match = re.search(r"```mermaid\n(.*?)\n```", content, re.DOTALL)
     if not mermaid_match:
         return None, content
@@ -135,7 +164,7 @@ def generate_diagram_image(content):
         return None, text_content
 
 def send_telegram_message(text_message, image_path=None):
-    """(Unchanged) Sends a text message and optionally an image to Telegram."""
+    """Sends a text message and optionally an image to Telegram."""
     print("Sending message to Telegram...")
     text_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     text_payload = {"chat_id": TELEGRAM_CHAT_ID, "text": text_message, "parse_mode": "Markdown"}
@@ -157,31 +186,27 @@ def send_telegram_message(text_message, image_path=None):
             return False
     return True
 
-# --- 4. EDITED CODE: MAIN EXECUTION ---
-
+# --- 4. MAIN EXECUTION ---
 if __name__ == "__main__":
-    print("--- Stateful AI Tutor Agent started ---")
-
-    # The main logic now calls the database functions
+    print("\n--- Main execution started ---")
     next_lesson = find_next_lesson_from_db()
 
     if next_lesson:
-        day = next_lesson.get('day')
         topic = next_lesson.get('topic')
-        
-        print(f"Found next lesson from DB: Day {day} - {topic}")
-        
         raw_content = generate_lesson_content(topic)
         
         if raw_content:
             diagram_path, clean_text = generate_diagram_image(raw_content)
             
             if send_telegram_message(clean_text, diagram_path):
-                # If the message is sent successfully, update the status in the database
                 update_lesson_status_in_db(next_lesson)
     else:
-        print("Congratulations! All lessons in Firestore are complete.")
+        print("  > No pending lessons to process.")
         send_telegram_message("🎉 You've completed the entire curriculum! Congratulations! 🎉")
         
-    print("--- Stateful AI Tutor Agent finished ---")
+    print("--- SCRIPT END ---")
+
+
+
+    
 
