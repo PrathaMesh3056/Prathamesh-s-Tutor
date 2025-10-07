@@ -62,12 +62,19 @@ def find_next_lesson_from_db():
         print(f"An error occurred while querying Firestore: {e}")
         return None
 
-def update_lesson_status_in_db(day):
-    """Updates the status of a lesson to 'complete' in Firestore."""
+# New, more robust function
+def update_lesson_status_in_db(lesson_data):
+    """Overwrites the lesson document in Firestore with an updated status."""
+    day = lesson_data.get('day')
     print(f"Updating status for Day {day} in Firestore...")
     try:
+        # Create a copy of the lesson data and change the status
+        updated_lesson = lesson_data.copy()
+        updated_lesson['status'] = 'complete'
+
+        # Use .set() to completely overwrite the document. This is more reliable.
         lesson_ref = db.collection(LESSONS_COLLECTION).document(str(day))
-        lesson_ref.update({'status': 'complete'})
+        lesson_ref.set(updated_lesson)
         print(f"  > Successfully updated Day {day} to 'complete'.")
     except Exception as e:
         print(f"  > Failed to update status for Day {day}: {e}")
@@ -171,7 +178,7 @@ if __name__ == "__main__":
             
             if send_telegram_message(clean_text, diagram_path):
                 # If the message is sent successfully, update the status in the database
-                update_lesson_status_in_db(day)
+                update_lesson_status_in_db(next_lesson)
     else:
         print("Congratulations! All lessons in Firestore are complete.")
         send_telegram_message("🎉 You've completed the entire curriculum! Congratulations! 🎉")
