@@ -5,18 +5,18 @@ import re
 import base64
 from dotenv import load_dotenv
 
-# --- Firebase Imports ---
+
 import firebase_admin
 from firebase_admin import credentials, firestore
 
-# --- Gemini Imports ---
+
 import google.generativeai as genai
 
-# --- 1. SETUP: LOAD SECRETS and CONFIGURE APIS ---
+
 print("--- SCRIPT START ---")
 load_dotenv()
 
-# Load and configure Google Gemini API
+
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 if GEMINI_API_KEY:
     print("OK: Gemini API Key loaded.")
@@ -26,7 +26,6 @@ else:
     print("FATAL ERROR: Gemini API Key not found in secrets!")
     exit()
 
-# Load and clean Telegram secrets
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "").strip().strip('"')
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "").strip().strip('"')
 if not (TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID):
@@ -35,7 +34,7 @@ if not (TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID):
 else:
     print("OK: Telegram secrets loaded.")
 
-# Load and initialize Firebase
+
 db = None
 try:
     FIREBASE_CREDS_JSON = os.getenv("FIREBASE_CREDS_JSON")
