@@ -133,7 +133,7 @@ def generate_diagram_image(content):
     """Finds Mermaid code, generates an image from it, and returns the path."""
     mermaid_match = re.search(r"```mermaid\n(.*?)\n```", content, re.DOTALL)
     if not mermaid_match:
-        return None, content # No diagram found, return original content
+        return None, content
     
     mermaid_code = mermaid_match.group(1).strip()
     text_content = content.replace(mermaid_match.group(0), "").strip()
@@ -152,31 +152,48 @@ def generate_diagram_image(content):
         return image_path, text_content
     except requests.exceptions.RequestException as e:
         print(f"  > WARNING: Failed to generate diagram image: {e}. Sending text only.")
-        return None, text_content # Return clean text even if image fails
+        return None, text_content
 
 def send_telegram_message(text_message, image_path=None):
-    """(Unchanged) Sends a text message and optionally an image to Telegram."""
-    print("Sending message to Telegram...")
+    """
+    Sends a text message and optionally an image to Telegram.
+    Tries to send with Markdown, but falls back to plain text if it fails, guaranteeing delivery.
+    """
+    print("-> Sending message to Telegram...")
     text_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-    text_payload = {"chat_id": TELEGRAM_CHAT_ID, "text": text_message, "parse_mode": "Markdown"}
+    
+    # Attempt 1: Send with Markdown
+    markdown_payload = {"chat_id": TELEGRAM_CHAT_ID, "text": text_message, "parse_mode": "Markdown"}
     try:
-        requests.post(text_url, json=text_payload).raise_for_status()
-        print("  > Text message sent successfully!")
+        response = requests.post(text_url, json=markdown_payload, timeout=10)
+        response.raise_for_status()
+        print("  > Text message sent successfully with Markdown!")
     except requests.exceptions.RequestException as e:
-        print(f"  > Failed to send text message: {e}")
-        return False
+        print(f"  > WARNING: Failed to send with Markdown ({e}). Retrying as plain text...")
+        # Attempt 2: Send as plain text if Markdown fails
+        plain_text_payload = {"chat_id": TELEGRAM_CHAT_ID, "text": text_message}
+        try:
+            response = requests.post(text_url, json=plain_text_payload, timeout=10)
+            response.raise_for_status()
+            print("  > Text message sent successfully as plain text!")
+        except requests.exceptions.RequestException as final_e:
+            print(f"  > FAILED to send as plain text: {final_e}")
+            print(f"  > Telegram Response: {response.text}")
+            return False
+
+    # If an image exists, send it
     if image_path:
+        print("-> Sending diagram image...")
         photo_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendPhoto"
         try:
             with open(image_path, "rb") as image_file:
                 files = {"photo": image_file}
-                requests.post(photo_url, data={"chat_id": TELEGRAM_CHAT_ID}, files=files).raise_for_status()
+                requests.post(photo_url, data={"chat_id": TELEGRAM_CHAT_ID}, files=files, timeout=10).raise_for_status()
             print("  > Image sent successfully!")
         except Exception as e:
-            print(f"  > Failed to send image: {e}")
-            return False
-    return True
-
+            print(f"  > WARNING: Failed to send image: {e}")
+    
+    return True # Return True as long as the text message was sent.
 
 # --- 4. MAIN EXECUTION ---
 if __name__ == "__main__":
@@ -199,7 +216,5 @@ if __name__ == "__main__":
         
     print("--- SCRIPT END ---")
 
-
-
-
+    
 
