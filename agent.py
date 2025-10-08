@@ -15,11 +15,10 @@ print("--- SCRIPT START ---")
 load_dotenv()
 
 # --- Initialize APIs (Gemini, Telegram, Firebase) ---
-# NOTE: This section contains robust initialization and error checking.
 try:
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
     genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel('gemini-2.0-flash')
+    model = genai.GenerativeModel('gemini-pro')
     print("OK: Gemini configured.")
 
     TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "").strip().strip('"')
@@ -52,7 +51,7 @@ LESSONS_COLLECTION = 'lessons'
 def find_next_lesson_from_db():
     print("-> Querying for next lesson...")
     try:
-        query = db.collection(LESSONS_COLLECTION).where('status', '==', 'pending').order_by('day').limit(1)
+        query = db.collection(LESSONS_COLLECTION).where(filter=firestore.FieldFilter('status', '==', 'pending')).order_by('day').limit(1)
         results = query.stream()
         for doc in results:
             print(f"  > Found: Day {doc.to_dict().get('day')}")
@@ -115,7 +114,6 @@ def send_telegram_message(text_message):
         print("  > Message sent successfully!")
         return True
     except requests.exceptions.RequestException as e:
-        # Print the detailed error from Telegram
         print(f"  > FAILED to send message: {e}")
         print(f"  > Telegram Response: {response.text}")
         return False
@@ -128,11 +126,9 @@ if __name__ == "__main__":
     if next_lesson:
         topic = next_lesson.get('topic')
         
-        # Generate simple text content only
         lesson_content = generate_simple_lesson_content(topic)
         
         if lesson_content:
-            # Send the text and if successful, update the database
             if send_telegram_message(lesson_content):
                 update_lesson_status_in_db(next_lesson)
     else:
