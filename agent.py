@@ -129,30 +129,30 @@ def generate_lesson_content(topic):
         print(f"  > ERROR generating content: {e}")
         return None
 
-def generate_diagram_image(content):
-    """Finds Mermaid code, generates an image from it, and returns the path."""
-    mermaid_match = re.search(r"```mermaid\n(.*?)\n```", content, re.DOTALL)
-    if not mermaid_match:
-        return None, content
+# def generate_diagram_image(content):
+#     """Finds Mermaid code, generates an image from it, and returns the path."""
+#     mermaid_match = re.search(r"```mermaid\n(.*?)\n```", content, re.DOTALL)
+#     if not mermaid_match:
+#         return None, content
     
-    mermaid_code = mermaid_match.group(1).strip()
-    text_content = content.replace(mermaid_match.group(0), "").strip()
-    print("-> Found Mermaid code, generating diagram...")
+#     mermaid_code = mermaid_match.group(1).strip()
+#     text_content = content.replace(mermaid_match.group(0), "").strip()
+#     print("-> Found Mermaid code, generating diagram...")
     
-    try:
-        base64_code = base64.b64encode(mermaid_code.encode("utf-8")).decode("utf-8")
-        image_url = f"https://mermaid.ink/img/base64:{base64_code}"
-        image_response = requests.get(image_url, timeout=10)
-        image_response.raise_for_status()
+#     try:
+#         base64_code = base64.b64encode(mermaid_code.encode("utf-8")).decode("utf-8")
+#         image_url = f"https://mermaid.ink/img/base64:{base64_code}"
+#         image_response = requests.get(image_url, timeout=10)
+#         image_response.raise_for_status()
         
-        image_path = "diagram.png"
-        with open(image_path, "wb") as f:
-            f.write(image_response.content)
-        print(f"  > Diagram saved to {image_path}")
-        return image_path, text_content
-    except requests.exceptions.RequestException as e:
-        print(f"  > WARNING: Failed to generate diagram image: {e}. Sending text only.")
-        return None, text_content
+#         image_path = "diagram.png"
+#         with open(image_path, "wb") as f:
+#             f.write(image_response.content)
+#         print(f"  > Diagram saved to {image_path}")
+#         return image_path, text_content
+#     except requests.exceptions.RequestException as e:
+#         print(f"  > WARNING: Failed to generate diagram image: {e}. Sending text only.")
+#         return None, text_content
 
 def send_telegram_message(text_message, image_path=None):
     """
@@ -182,18 +182,18 @@ def send_telegram_message(text_message, image_path=None):
             return False
 
     # If an image exists, send it
-    if image_path:
-        print("-> Sending diagram image...")
-        photo_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendPhoto"
-        try:
-            with open(image_path, "rb") as image_file:
-                files = {"photo": image_file}
-                requests.post(photo_url, data={"chat_id": TELEGRAM_CHAT_ID}, files=files, timeout=10).raise_for_status()
-            print("  > Image sent successfully!")
-        except Exception as e:
-            print(f"  > WARNING: Failed to send image: {e}")
+    # if image_path:
+    #     print("-> Sending diagram image...")
+    #     photo_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendPhoto"
+    #     try:
+    #         with open(image_path, "rb") as image_file:
+    #             files = {"photo": image_file}
+    #             requests.post(photo_url, data={"chat_id": TELEGRAM_CHAT_ID}, files=files, timeout=10).raise_for_status()
+    #         print("  > Image sent successfully!")
+    #     except Exception as e:
+    #         print(f"  > WARNING: Failed to send image: {e}")
     
-    return True # Return True as long as the text message was sent.
+    # return True # Return True as long as the text message was sent.
 
 # --- 4. MAIN EXECUTION ---
 if __name__ == "__main__":
