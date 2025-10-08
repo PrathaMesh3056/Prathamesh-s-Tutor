@@ -162,21 +162,21 @@ def send_telegram_message(text_message, image_path=None):
     print("-> Sending message to Telegram...")
     text_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     
-    # Attempt 1: Send with Markdown
-    markdown_payload = {"chat_id": TELEGRAM_CHAT_ID, "text": text_message, "parse_mode": "Markdown"}
+    # # Attempt 1: Send with Markdown
+    # markdown_payload = {"chat_id": TELEGRAM_CHAT_ID, "text": text_message, "parse_mode": "Markdown"}
+    # try:
+    #     response = requests.post(text_url, json=markdown_payload, timeout=10)
+    #     response.raise_for_status()
+    #     print("  > Text message sent successfully with Markdown!")
+    # except requests.exceptions.RequestException as e:
+    #     print(f"  > WARNING: Failed to send with Markdown ({e}). Retrying as plain text...")
+    #  Attempt 2: Send as plain text if Markdown fails
+    plain_text_payload = {"chat_id": TELEGRAM_CHAT_ID, "text": text_message}
     try:
-        response = requests.post(text_url, json=markdown_payload, timeout=10)
-        response.raise_for_status()
-        print("  > Text message sent successfully with Markdown!")
-    except requests.exceptions.RequestException as e:
-        print(f"  > WARNING: Failed to send with Markdown ({e}). Retrying as plain text...")
-        # Attempt 2: Send as plain text if Markdown fails
-        plain_text_payload = {"chat_id": TELEGRAM_CHAT_ID, "text": text_message}
-        try:
             response = requests.post(text_url, json=plain_text_payload, timeout=10)
             response.raise_for_status()
             print("  > Text message sent successfully as plain text!")
-        except requests.exceptions.RequestException as final_e:
+    except requests.exceptions.RequestException as final_e:
             print(f"  > FAILED to send as plain text: {final_e}")
             print(f"  > Telegram Response: {response.text}")
             return False
