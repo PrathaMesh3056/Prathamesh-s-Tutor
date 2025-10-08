@@ -22,7 +22,7 @@ try:
     if not GEMINI_API_KEY:
         raise ValueError("GEMINI_API_KEY not found in secrets!")
     genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel('gemini-pro')
+    model = genai.GenerativeModel('gemini-2.0-flash')
     print("OK: Gemini API configured.")
 except Exception as e:
     print(f"FATAL ERROR configuring Gemini: {e}")
